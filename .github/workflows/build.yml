@@ -9,28 +9,26 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Setup MSVC Environment
+    - name: Setup MSVC Developer Environment
       uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
 
-    - name: Configure CMake
-      run: >
-        cmake -B build
-        -DCMAKE_BUILD_TYPE=Release
-        -G "Visual Studio 17 2022"
-        -A x64
+    - name: Configure CMake with Ninja
+      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 
-    - name: Build Standalone Executable
+    - name: Build Aegis Binary
       run: cmake --build build --config Release
 
     - name: Upload Binary Artifact
       uses: actions/upload-artifact@v4
       with:
         name: AegisRecovery-x64
-        path: build/bin/Release/AegisRecovery.exe
+        path: build/bin/AegisRecovery.exe
         if-no-files-found: error
