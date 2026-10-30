@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Статическая линковка Runtime (/MT) - КРИТИЧНО для WinRE
+# Статическая линковка Runtime (/MT) для WinRE
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 add_compile_definitions(UNICODE _UNICODE WIN32_LEAN_AND_MEAN)
@@ -48,7 +48,8 @@ target_link_libraries(AegisRecovery PRIVATE
     ntdll
 )
 
+# Сохраняем строго в build/bin/AegisRecovery.exe
 set_target_properties(AegisRecovery PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin/Release"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
 )
